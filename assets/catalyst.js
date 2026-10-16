@@ -709,6 +709,7 @@ body{padding-bottom:76px}
 .top .cx-print{display:inline-flex;align-items:center;gap:6px;text-decoration:none;border:1px solid var(--line,#e7dfd1);background:var(--paper,#fffdf9);border-radius:999px;padding:7px 12px;font:700 13.5px Outfit,sans-serif;color:var(--ink,#1b2a4e);margin-left:auto;white-space:nowrap}
 .top .cx-print svg{color:#7a4fa8}.top .cx-print:hover{border-color:#e0573a}
 .top .cx-print+.cx-all{margin-left:8px}
+@media (max-width:380px){.top #artog span{display:none}.top #artog{padding:6px 10px}}
 @media (max-width:440px){.top .cx-print span{display:none}.top .cx-print{padding:8px 10px}.top .logo small{font-size:13px!important}}
 @media (min-width:1080px){
   .top .cx-all{display:inline-flex}
