@@ -706,6 +706,10 @@ body{padding-bottom:76px}
 .cx-printcard{grid-column:1/-1;margin-top:12px}
 .top .cx-all{display:none;margin-left:auto;text-decoration:none;border:1px solid var(--line,#e7dfd1);background:var(--paper,#fffdf9);border-radius:999px;padding:7px 14px;font:600 13.5px Outfit,sans-serif;color:var(--ink,#1b2a4e)}
 .top .cx-all:hover{border-color:#e0573a}
+.top .cx-print{display:inline-flex;align-items:center;gap:6px;text-decoration:none;border:1px solid var(--line,#e7dfd1);background:var(--paper,#fffdf9);border-radius:999px;padding:7px 12px;font:700 13.5px Outfit,sans-serif;color:var(--ink,#1b2a4e);margin-left:auto;white-space:nowrap}
+.top .cx-print svg{color:#7a4fa8}.top .cx-print:hover{border-color:#e0573a}
+.top .cx-print+.cx-all{margin-left:8px}
+@media (max-width:440px){.top .cx-print span{display:none}.top .cx-print{padding:8px 10px}.top .logo small{font-size:13px!important}}
 @media (min-width:1080px){
   .top .cx-all{display:inline-flex}
   body.cx-home main.wrap,body.cx-home .top .in{max-width:1180px!important}
@@ -731,6 +735,7 @@ const st=document.createElement("style");st.id="cx-shell";st.textContent=css;doc
 
 /* logo → the Catalyst home */
 const logo=document.querySelector(".top .logo");
+if(logo&&!document.querySelector(".top .cx-print")){const a=document.createElement("a");a.className="cx-print";a.href="/print/#"+cid;a.setAttribute("aria-label","Print library: booklets and PDFs");a.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"><path d="M6 9V3h12v6"/><rect x="2" y="9" width="20" height="9" rx="2"/><rect x="6" y="14" width="12" height="7" rx="1"/></svg><span>Print</span>';const sp=document.querySelector(".top .sp");(sp||logo).after(a);}
 if(logo&&!document.querySelector(".top .cx-all")){const a=document.createElement("a");a.className="cx-all";a.href="/#courses";a.textContent="All courses";const sp=document.querySelector(".top .sp");(sp||logo).after(a);}
 if(logo){if(logo.tagName==="A")logo.href="/";else{const a=document.createElement("a");a.className=logo.className;a.innerHTML=logo.innerHTML;a.href="/";a.title="All courses";logo.replaceWith(a);}}
 const tg=s=>s.replace(/Full mark\./g,"Full marks.").replace(/FULL MARK\./g,"FULL MARKS.");
@@ -809,7 +814,15 @@ function decorate(force){
         const card=figCard(w.lid,FIG[w.lid]);
         if(at&&at.parentElement)at.after(card);else{const hero=w.view.querySelector(".hero,.lhero,.chero");hero?hero.after(card):w.view.prepend(card);}
       }
-    }else if(!w.lesson){document.querySelectorAll(".cx-fig").forEach(f=>{if(!f.closest(".view.on")&&SCI)return;});}
+    }
+    if(w.lesson&&w.view&&!w.view.querySelector(".cx-lprint")){
+      const q=[...w.view.querySelectorAll("button,a,div")].find(e=>/^\s*Quick test/.test(e.textContent)&&e.children.length<6);
+      let at=w.view.querySelector(".cx-fig")||q;while(at&&at.parentElement&&at.parentElement!==w.view&&!at.parentElement.classList.contains("grid")&&!at.parentElement.classList.contains("tiles"))at=at.parentElement;
+      const a=document.createElement("a");a.className="cx-card cx-printcard cx-lprint";a.href="/print/#"+cid;
+      a.innerHTML='<span class="ic" style="background:#f1ecf8;color:#7a4fa8"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9V3h12v6"/><rect x="2" y="9" width="20" height="9" rx="2"/><rect x="6" y="14" width="12" height="7" rx="1"/></svg></span><span><b>Print the booklet</b><small>Revision booklet, worksheets, quiz and mock exam (PDF)</small></span><span class="gt">›</span>';
+      if(at&&at.parentElement)at.after(a);
+    }
+    if(!w.lesson){document.querySelectorAll(".cx-fig").forEach(f=>{if(!f.closest(".view.on")&&SCI)return;});}
   }finally{busy=false;}
 }
 let raf=0;const later=()=>{if(!raf)raf=requestAnimationFrame(()=>{raf=0;decorate();});};
