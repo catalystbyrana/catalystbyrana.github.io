@@ -768,7 +768,7 @@ function planCard(){
 function figCard(lid,spec){
   const [name,mode]=spec.split(":");
   const w=document.createElement("div");w.className="cx-fig";w.dataset.l=lid;
-  w.innerHTML='<button type="button" class="cx-card"><span class="ic" style="background:#e5f2f2;color:#0f8486"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span><span><b>Watch it move · '+NAMES[name]+'</b><small>'+SUBS[name]+'</small></span><span class="gt">›</span></button><div class="cx-figbox" hidden></div>';
+  w.innerHTML='<button type="button" class="cx-card navy"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span><span><b>Watch it move · '+NAMES[name]+'</b><small>'+SUBS[name]+'</small></span><span class="gt">›</span></button><div class="cx-figbox" hidden></div>';
   let ctl=null;const box=w.querySelector(".cx-figbox"),btn=w.querySelector("button");
   btn.addEventListener("click",()=>{const open=box.hidden;box.hidden=!open;btn.querySelector(".gt").textContent=open?"⌄":"›";
     if(open&&!ctl&&window.CatalystFigs)ctl=CatalystFigs.mount(box,name,{ar:!document.body.classList.contains("noar"),mode,title:NAMES[name]});
@@ -802,7 +802,7 @@ function decorate(force){
     if(w.home&&w.view&&course){
       let pc=w.view.querySelector(".cx-plancard");
       if(force&&pc){const p=pc.parentElement;pc.remove();pc=null;}
-      if(!pc){const anchor=w.view.querySelector(".homebtns")||w.view.querySelector(".chero");if(anchor){const pcd=planCard();anchor.after(pcd);const old=w.view.querySelector(".cx-printcard");if(old)old.remove();const a=document.createElement("a");a.className="cx-card cx-printcard";a.href="/print/#"+cid;a.innerHTML='<span class="ic" style="background:#f1ecf8;color:#7a4fa8"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9V3h12v6"/><rect x="2" y="9" width="20" height="9" rx="2"/><rect x="6" y="14" width="12" height="7" rx="1"/></svg></span><span><b>Print this term</b><small>Booklet, worksheets, quizzes and mock exam as PDFs</small></span><span class="gt">›</span>';pcd.after(a);}}
+      if(!pc){const anchor=w.view.querySelector(".homebtns")||w.view.querySelector(".chero");if(anchor){const pcd=planCard();anchor.after(pcd);const old=w.view.querySelector(".cx-printcard");if(old)old.remove();const a=document.createElement("a");a.className="cx-card navy cx-printcard";a.href="/print/#"+cid;a.innerHTML='<span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9V3h12v6"/><rect x="2" y="9" width="20" height="9" rx="2"/><rect x="6" y="14" width="12" height="7" rx="1"/></svg></span><span><b>Print this term</b><small>Booklet, worksheets, quizzes and mock exam as PDFs</small></span><span class="gt">›</span>';pcd.after(a);}}
       wide(w.view);
     }
     if(w.lesson&&w.view&&w.lid&&FIG[w.lid]){
@@ -818,8 +818,8 @@ function decorate(force){
     if(w.lesson&&w.view&&!w.view.querySelector(".cx-lprint")){
       const q=[...w.view.querySelectorAll("button,a,div")].find(e=>/^\s*Quick test/.test(e.textContent)&&e.children.length<6);
       let at=w.view.querySelector(".cx-fig")||q;while(at&&at.parentElement&&at.parentElement!==w.view&&!at.parentElement.classList.contains("grid")&&!at.parentElement.classList.contains("tiles"))at=at.parentElement;
-      const a=document.createElement("a");a.className="cx-card cx-printcard cx-lprint";a.href="/print/#"+cid;
-      a.innerHTML='<span class="ic" style="background:#f1ecf8;color:#7a4fa8"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9V3h12v6"/><rect x="2" y="9" width="20" height="9" rx="2"/><rect x="6" y="14" width="12" height="7" rx="1"/></svg></span><span><b>Print the booklet</b><small>Revision booklet, worksheets, quiz and mock exam (PDF)</small></span><span class="gt">›</span>';
+      const a=document.createElement("a");a.className="cx-card navy cx-printcard cx-lprint";a.href="/print/#"+cid;
+      a.innerHTML='<span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9V3h12v6"/><rect x="2" y="9" width="20" height="9" rx="2"/><rect x="6" y="14" width="12" height="7" rx="1"/></svg></span><span><b>Print the booklet</b><small>Revision booklet, worksheets, quiz and mock exam (PDF)</small></span><span class="gt">›</span>';
       if(at&&at.parentElement)at.after(a);
     }
     if(!w.lesson){document.querySelectorAll(".cx-fig").forEach(f=>{if(!f.closest(".view.on")&&SCI)return;});}
