@@ -834,71 +834,117 @@ addEventListener("hashchange",()=>{
 decorate();
 })();
 
-/* ===== Spark: the Catalyst guide (the coral dot from the logo and the energy curve) ===== */
+/* ===== Spark: the Catalyst guide — the coral dot. Search the whole course, get a tip, jump into a test ===== */
 (function(){
 "use strict";
 const SCI=typeof window.setLesson==="function"&&typeof window.go==="function";
+const cid=window.CATALYST_COURSE||"";
 const css=`
 .cx-spark{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:900;font-family:Outfit,system-ui,sans-serif}
 .cx-spark[hidden]{display:none}
-.cx-sbtn{width:50px;height:50px;border-radius:50%;border:0;cursor:pointer;background:radial-gradient(circle at 38% 34%,#fff 0 9%,#ffd3c4 18%,#f27c5f 46%,#e0573a 70%);box-shadow:0 10px 28px -8px rgba(224,87,58,.75),0 0 0 6px rgba(224,87,58,.14);position:relative}
+.cx-srow{display:flex;align-items:center;gap:10px;justify-content:flex-end}
+.cx-slabel{background:#1b2a4e;color:#fbf6ee;border-radius:999px;padding:9px 14px;font:700 13.5px Outfit,sans-serif;box-shadow:0 12px 26px -14px rgba(17,27,52,.7);cursor:pointer;border:0;white-space:nowrap}
+.cx-slabel b{color:#f27c5f}
+.cx-sbtn{width:52px;height:52px;border-radius:50%;border:0;cursor:pointer;background:radial-gradient(circle at 38% 34%,#fff 0 9%,#ffd3c4 18%,#f27c5f 46%,#e0573a 70%);box-shadow:0 10px 28px -8px rgba(224,87,58,.75),0 0 0 6px rgba(224,87,58,.14);position:relative;flex:none}
 .cx-sbtn:after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(224,87,58,.45);animation:cxpulse 2.4s ease-out infinite}
 @keyframes cxpulse{from{transform:scale(.85);opacity:1}to{transform:scale(1.45);opacity:0}}
 @media (prefers-reduced-motion:reduce){.cx-sbtn:after{animation:none}}
-.cx-sbub{position:absolute;right:0;bottom:64px;width:min(340px,calc(100vw - 32px));background:#1b2a4e;color:#fbf6ee;border-radius:22px;padding:16px 16px 14px;box-shadow:0 30px 60px -24px rgba(17,27,52,.7);transform-origin:bottom right;animation:cxpop .28s cubic-bezier(.2,.9,.3,1.3) backwards}
+.cx-sbub{position:absolute;right:0;bottom:66px;width:min(380px,calc(100vw - 32px));max-height:min(560px,calc(100vh - 120px));overflow:auto;background:#1b2a4e;color:#fbf6ee;border-radius:24px;padding:16px;box-shadow:0 0 0 1px rgba(233,194,122,.35),0 30px 70px -20px rgba(17,27,52,.85);transform-origin:bottom right;animation:cxpop .28s cubic-bezier(.2,.9,.3,1.3) backwards}
 .cx-sbub[hidden]{display:none}
 @keyframes cxpop{from{transform:scale(.6);opacity:0}}
-.cx-sbub:after{content:"";position:absolute;right:22px;bottom:-7px;width:14px;height:14px;background:#1b2a4e;transform:rotate(45deg);border-radius:3px}
-.cx-sh{display:flex;align-items:center;gap:8px;font:700 12px Outfit,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#f27c5f}
-.cx-sh i{width:10px;height:10px;border-radius:50%;background:#e0573a;box-shadow:0 0 0 4px rgba(224,87,58,.25)}
-.cx-sh button{margin-left:auto;background:none;border:0;color:#aeb8d0;font:600 20px Outfit;cursor:pointer;line-height:1;padding:2px 4px}
-.cx-st{font:400 21px/1.2 Gloock,Georgia,serif;margin:10px 0 6px}
-.cx-sp{font-size:15px;line-height:1.45;color:#d9deea;margin:0}
-.cx-sp .no{color:#ff9d86;text-decoration:line-through;text-decoration-thickness:1.5px}
-.cx-sp .ok{color:#7fe0c3;font-weight:600}
-.cx-sa{display:block;direction:rtl;text-align:right;font:600 14px/1.6 Cairo,sans-serif;color:#aeb8d0;margin-top:6px}
-.cx-sf{display:flex;gap:8px;margin-top:12px}
-.cx-sf button,.cx-sf a{border:1px solid rgba(251,246,238,.2);background:rgba(251,246,238,.06);color:#fbf6ee;border-radius:999px;padding:8px 13px;font:700 13.5px Outfit,sans-serif;cursor:pointer;text-decoration:none}
-.cx-sf .p{background:#e0573a;border-color:#e0573a}
-body.noar .cx-sa{display:none}
+.cx-sh{display:flex;align-items:center;gap:10px}
+.cx-sh i{width:30px;height:30px;border-radius:50%;flex:none;background:radial-gradient(circle at 38% 34%,#fff 0 9%,#ffd3c4 18%,#f27c5f 46%,#e0573a 70%)}
+.cx-sh b{font:400 22px/1 Gloock,Georgia,serif}
+.cx-sh small{display:block;font:600 12.5px Outfit,sans-serif;color:#aeb8d0;margin-top:3px}
+.cx-sh button{margin-left:auto;background:none;border:0;color:#aeb8d0;font:600 22px Outfit;cursor:pointer;line-height:1;padding:2px 4px;align-self:flex-start}
+.cx-sq{position:relative;margin-top:14px}
+.cx-sq input{width:100%;box-sizing:border-box;font:600 16px Outfit,sans-serif;border:1.5px solid rgba(251,246,238,.18);background:rgba(251,246,238,.08);color:#fbf6ee;border-radius:14px;padding:12px 14px 12px 40px;min-height:48px}
+.cx-sq input::placeholder{color:#aeb8d0}
+.cx-sq svg{position:absolute;left:13px;top:15px;color:#aeb8d0}
+.cx-sacts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.cx-sacts button{border:1px solid rgba(251,246,238,.2);background:rgba(251,246,238,.06);color:#fbf6ee;border-radius:999px;padding:8px 13px;font:700 13.5px Outfit,sans-serif;cursor:pointer}
+.cx-sacts button.p{background:#e0573a;border-color:#e0573a}
+.cx-sres{margin-top:12px;display:grid;gap:8px}
+.cx-sres button{display:block;width:100%;text-align:left;background:rgba(251,246,238,.06);border:1px solid rgba(251,246,238,.14);color:#fbf6ee;border-radius:14px;padding:10px 12px;cursor:pointer;font:inherit}
+.cx-sres button:hover{border-color:#f27c5f}
+.cx-sres .c{font:700 11.5px Outfit,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#f27c5f}
+.cx-sres .t{display:block;font:600 15px/1.3 Outfit,sans-serif;margin-top:2px}
+.cx-sres .m{display:block;font-size:13.5px;line-height:1.4;color:#d9deea;margin-top:3px}
+.cx-sres mark{background:rgba(242,124,95,.35);color:#fff;border-radius:3px;padding:0 2px}
+.cx-sempty{color:#aeb8d0;font-size:14px;margin:10px 2px 0}
+.cx-tip{margin-top:12px;background:rgba(251,246,238,.06);border-radius:16px;padding:12px 14px}
+.cx-tip .k{font:700 11.5px Outfit,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#f27c5f}
+.cx-tip .h{font:400 19px/1.2 Gloock,Georgia,serif;margin:6px 0 4px}
+.cx-tip p{margin:0;font-size:14.5px;line-height:1.45;color:#d9deea}
+.cx-tip .no{color:#ff9d86;text-decoration:line-through}.cx-tip .ok{color:#7fe0c3;font-weight:600}
+.cx-tip .a{display:block;direction:rtl;text-align:right;font:600 13.5px/1.6 Cairo,sans-serif;color:#aeb8d0;margin-top:5px}
+body.noar .cx-tip .a{display:none}
 `;
 const st=document.createElement("style");st.textContent=css;document.head.appendChild(st);
 const root=document.createElement("div");root.className="cx-spark";root.hidden=true;
-root.innerHTML='<div class="cx-sbub" hidden role="dialog" aria-label="Spark"><div class="cx-sh"><i></i><span>Spark</span><button type="button" aria-label="Close">×</button></div><div class="cx-sc"></div><div class="cx-sf"></div></div><button class="cx-sbtn" type="button" aria-label="Spark: a tip for this lesson"></button>';
+root.innerHTML='<div class="cx-sbub" hidden role="dialog" aria-label="Spark"><div class="cx-sh"><i></i><div><b>Spark</b><small>Your catalyst. Find anything in this course.</small></div><button type="button" class="cx-x2" aria-label="Close">×</button></div>'+
+ '<label class="cx-sq"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="search" placeholder="Search this course…" aria-label="Search this course" autocomplete="off"></label>'+
+ '<div class="cx-sacts"></div><div class="cx-sres" aria-live="polite"></div><div class="cx-tipbox"></div></div>'+
+ '<div class="cx-srow"><button class="cx-slabel" type="button">Ask <b>Spark</b></button><button class="cx-sbtn" type="button" aria-label="Open Spark: search this course"></button></div>';
 document.body.appendChild(root);
-const bub=root.querySelector(".cx-sbub"),sc=root.querySelector(".cx-sc"),sf=root.querySelector(".cx-sf");
+const $=s=>root.querySelector(s),bub=$(".cx-sbub"),inp=$("input"),res=$(".cx-sres"),acts=$(".cx-sacts"),tipbox=$(".cx-tipbox"),label=$(".cx-slabel");
 const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const strip=s=>String(s==null?"":s).replace(/<[^>]+>/g," ").replace(/\$/g,"").replace(/\s+/g," ").trim();
 const fm=s=>{try{return window.CM&&CM.T?CM.T(String(s)):esc(s).replace(/\$/g,"");}catch(e){return esc(s).replace(/\$/g,"");}};
-let deck=[],k=0,ctx="";
-function lessonDeck(){
-  if(SCI){if(typeof L==="undefined"||!L)return[];const d=[];
-    (L.hooks||[]).forEach(h=>d.push({t:"Memory hook",h:h[0],p:esc(h[1]),a:h[2]}));
-    (L.facts||[]).forEach(f=>d.push({t:"Did you know?",h:f[0],p:esc(f[1]),a:f[2]}));
-    return d;}
-  const id=location.hash.slice(1),l=window.LESSONS&&LESSONS[id];if(!l)return[];
-  return (l.traps||[]).map(t=>({t:"Don't fall for it",h:"",p:'<span class="no">'+fm(t.x)+'</span><br><span class="ok">✓ '+fm(t.v)+'</span><br>'+fm(t.why),a:t.ar}));
+/* ---- index ---- */
+let IDX=null;
+function flat(x,out){if(x==null)return;if(typeof x==="string"||typeof x==="number"){out.push(String(x));return;}if(Array.isArray(x)){x.forEach(y=>flat(y,out));return;}if(typeof x==="object")for(const k in x){if(/^(c|id|gen|lv|a|src|hid|n|art|band|spots|fig|next|ready|exit|mod|book|sec|pp|code)$/.test(k))continue;flat(x[k],out);}}
+function build(){
+  IDX=[];
+  if(SCI&&typeof COURSE!=="undefined"){COURSE.lessons.forEach(l=>{if(l.ready===false)return;const m=(l.id.match(/([lx])(\d+)$/)||[]);if(!m.length)return;const hash=m[1]+(+m[2]);
+    const parts=[];flat([l.title,l.ar,l.booklet,l.learn,l.cards,l.hooks,l.facts,l.map,l.sentences],parts);
+    const qs=[];(l.bank||[]).forEach(q=>{flat([q.q,q.qa],qs);});
+    IDX.push({hash,code:l.booklet||"",title:l.title,name:l.booklet,text:parts.map(strip),qs:qs.map(strip)});});}
+  else if(window.LESSONS){for(const id in LESSONS){const l=LESSONS[id];const parts=[];flat([l.title,l.ar,l.name,l.words,l.keys,l.map,(l.types||[]).map(t=>[t.t,t.ar,t.how]),(l.traps||[]).map(t=>[t.x,t.v,t.why,t.ar])],parts);
+    IDX.push({hash:id,code:"Lesson "+(l.n||""),title:l.title,name:l.name||"",text:parts.map(strip),qs:[]});}}
 }
-function homeDeck(){
-  const s=window.CatalystPlan&&CatalystPlan.status();const d=[];
-  if(s&&s.course.id===window.CATALYST_COURSE){const t=s.today&&s.today.items[0];d.push({t:s.days+" days to go",h:t?"Today: "+t.t:"Your plan is ready",p:t?"One thing today, done well, beats five things rushed.":"Open the plan to see today's task.",a:"",link:t?t.u:null});}
-  else d.push({t:"Start here",h:"When is your exam?",p:"Tell me the date and I'll plan every day until then, one lesson at a time.",a:"",plan:true});
-  d.push({t:"How to win a lesson",h:"Read · watch · test · fix",p:"Read the lesson page, open the figure, take the quick test, then clear your mistakes. Twenty minutes, one lesson.",a:""});
-  return d;
+function search(q){
+  if(!IDX)build();q=q.trim().toLowerCase();if(q.length<2)return[];
+  const words=q.split(/\s+/).filter(Boolean);const out=[];
+  IDX.forEach(L=>{let score=0,snip="";const T=(L.title+" "+L.name).toLowerCase();
+    words.forEach(w=>{if(T.includes(w))score+=10;});
+    for(const t of L.text){const tl=t.toLowerCase();if(words.every(w=>tl.includes(w))){score+=4;if(!snip)snip=t;}}
+    for(const t of L.qs){const tl=t.toLowerCase();if(words.every(w=>tl.includes(w))){score+=1;if(!snip)snip=t;}}
+    if(score)out.push({L,score,snip});});
+  return out.sort((a,b)=>b.score-a.score).slice(0,8);
 }
-function show(){
-  const c=deck[k%deck.length];if(!c)return;
-  sc.innerHTML='<div class="cx-st">'+esc(c.h||c.t)+'</div><p class="cx-sp">'+c.p+'</p>'+(c.a?'<span class="cx-sa">'+esc(c.a)+'</span>':"");
-  root.querySelector(".cx-sh span").textContent="Spark · "+c.t;
-  sf.innerHTML=(deck.length>1?'<button type="button" data-a="next" class="p">Another one</button>':"")+(c.link?'<a href="'+c.link+'">Open today\'s lesson</a>':"")+(c.plan?'<button type="button" data-a="plan" class="p">Plan my exam</button>':"");
+function hl(t,q){let s=esc(t.length>150?t.slice(0,150)+"…":t);q.trim().split(/\s+/).filter(w=>w.length>1).forEach(w=>{s=s.replace(new RegExp("("+w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","ig"),"<mark>$1</mark>");});return s;}
+function showResults(){
+  const q=inp.value,r=search(q);tipbox.hidden=!!q.trim();
+  if(!q.trim()){res.innerHTML="";return;}
+  if(!r.length){res.innerHTML='<p class="cx-sempty">Nothing found for “'+esc(q)+'”. Try one word, like a key term.</p>';return;}
+  res.innerHTML=r.map(x=>'<button type="button" data-h="'+x.L.hash+'"><span class="c">'+esc(x.L.code)+'</span><span class="t">'+esc(x.L.title)+'</span>'+(x.snip?'<span class="m">'+hl(x.snip,q)+'</span>':"")+'</button>').join("");
 }
-root.querySelector(".cx-sbtn").addEventListener("click",()=>{if(!bub.hidden){bub.hidden=true;return;}deck=ctx==="home"?homeDeck():lessonDeck();if(!deck.length)return;k=Math.floor(Math.random()*deck.length);show();bub.hidden=false;});
-root.querySelector(".cx-sh button").addEventListener("click",()=>{bub.hidden=true;});
-sf.addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(!b)return;if(b.dataset.a==="next"){k++;show();}else if(b.dataset.a==="plan"){bub.hidden=true;const pc=document.querySelector(".cx-plancard");if(pc)pc.click();}});
-function where(){
-  if(SCI){const v=document.querySelector(".view.on");return v?(v.id==="v-course"?"home":v.id==="v-home"?"lesson":""):"";}
-  const h=location.hash.slice(1);return(!h||h==="home")?"home":/^l\d+$/.test(h)?"lesson":"";
+inp.addEventListener("input",showResults);
+res.addEventListener("click",e=>{const b=e.target.closest("button[data-h]");if(!b)return;bub.hidden=true;inp.value="";res.innerHTML="";location.hash=b.dataset.h;scrollTo(0,0);});
+/* ---- tips + actions ---- */
+function deck(){
+  if(SCI){if(typeof L==="undefined"||!L)return[];const d=[];(L.hooks||[]).forEach(h=>d.push({k:"Memory hook",h:h[0],p:esc(h[1]),a:h[2]}));(L.facts||[]).forEach(f=>d.push({k:"Did you know?",h:f[0],p:esc(f[1]),a:f[2]}));return d;}
+  const l=window.LESSONS&&LESSONS[location.hash.slice(1)];if(!l)return[];
+  return (l.traps||[]).map(t=>({k:"Don't fall for it",h:"",p:'<span class="no">'+fm(t.x)+'</span><br><span class="ok">✓ '+fm(t.v)+'</span><br>'+fm(t.why),a:t.ar}));
 }
-function sync(){const w=where();if(w!==ctx){ctx=w;bub.hidden=true;}root.hidden=!ctx||(ctx==="lesson"&&!lessonDeck().length);}
+let D=[],k=0;
+function tip(){if(!D.length){tipbox.innerHTML="";return;}const c=D[k%D.length];tipbox.innerHTML='<div class="cx-tip"><div class="k">'+esc(c.k)+'</div>'+(c.h?'<div class="h">'+esc(c.h)+'</div>':"")+'<p>'+c.p+'</p>'+(c.a?'<span class="a">'+esc(c.a)+'</span>':"")+'</div>';}
+function where(){if(SCI){const v=document.querySelector(".view.on");return v?(v.id==="v-course"?"home":v.id==="v-home"?"lesson":""):"";}const h=location.hash.slice(1);return(!h||h==="home")?"home":/^l\d+$/.test(h)?"lesson":"";}
+function quick(){const q=[...document.querySelectorAll(SCI?".view.on button,.view.on a,.view.on div":"#app button,#app a,#app div")].find(e=>/^\s*Quick test/.test(e.textContent)&&e.children.length<6);if(q){bub.hidden=true;(q.closest("button,a")||q).click();}}
+function setup(){
+  const w=where();D=w==="lesson"?deck():[];k=Math.floor(Math.random()*Math.max(1,D.length));
+  acts.innerHTML=(w==="lesson"?'<button type="button" class="p" data-a="quick">Quick test now</button>':"")+(D.length>1?'<button type="button" data-a="tip">Another tip</button>':"")+'<button type="button" data-a="plan">Exam plan</button>';
+  tip();
+}
+acts.addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(!b)return;const a=b.dataset.a;
+  if(a==="tip"){k++;tip();}else if(a==="quick")quick();else if(a==="plan"){bub.hidden=true;const pc=document.querySelector(".cx-plancard");if(pc)pc.click();else location.hash="";}});
+function open(){if(!bub.hidden){bub.hidden=true;return;}setup();bub.hidden=false;label.hidden=true;try{localStorage.setItem("cx-spark-seen","1");}catch(e){}setTimeout(()=>inp.focus({preventScroll:true}),60);}
+$(".cx-sbtn").addEventListener("click",open);label.addEventListener("click",open);
+$(".cx-x2").addEventListener("click",()=>{bub.hidden=true;});
+addEventListener("keydown",e=>{if(e.key==="Escape")bub.hidden=true;if(e.key==="/"&&!/input|textarea/i.test(document.activeElement.tagName)&&!root.hidden){e.preventDefault();if(bub.hidden)open();}});
+try{if(localStorage.getItem("cx-spark-seen"))label.hidden=true;}catch(e){}
+let ctx="";function sync(){const w=where();if(w!==ctx){ctx=w;bub.hidden=true;}root.hidden=!ctx;}
 let r=0;new MutationObserver(()=>{if(!r)r=requestAnimationFrame(()=>{r=0;sync();});}).observe(document.querySelector("main")||document.body,{childList:true,subtree:true,attributes:true,attributeFilter:["class"]});
 addEventListener("hashchange",()=>setTimeout(sync,50));sync();
 })();

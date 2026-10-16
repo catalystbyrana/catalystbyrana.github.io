@@ -57,7 +57,7 @@ main{padding-block:36px 90px}
 .btn{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:7px;border-radius:999px;padding:10px 12px;font:700 14px/1 Outfit,sans-serif;text-decoration:none;border:0;cursor:pointer;min-height:42px}
 .btn.solid{background:var(--coral);color:#fff}.btn.solid:hover{background:#c94a2f}
 .btn.line{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}.btn.line:hover{box-shadow:inset 0 0 0 1.5px var(--ink)}
-.ans{margin-top:8px;display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1.5px dashed #d8cbb6;background:transparent;color:var(--soft);border-radius:999px;padding:8px 12px;font:700 13px Outfit,sans-serif;cursor:pointer;min-height:38px}
+.ans{margin-top:8px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1.5px dashed #d8cbb6;background:transparent;color:var(--soft);border-radius:999px;padding:8px 12px;font:700 13px Outfit,sans-serif;cursor:pointer;min-height:38px}
 .ans:hover{border-color:var(--coral);color:var(--coral)}
 .teacher{margin-top:64px;background:var(--navy);color:var(--on);border-radius:28px;padding:clamp(20px,3.4vw,36px);position:relative;overflow:hidden}
 .teacher:after{content:"";position:absolute;right:-70px;top:-90px;width:240px;height:240px;border-radius:50%;background:rgba(224,87,58,.32)}
@@ -90,21 +90,13 @@ footer a{text-decoration:none}footer a:hover{color:var(--on)}
     <div><p class="kick">Print library</p><h1>Ready for <em>paper.</em></h1></div>
     <div>
       <p>Every booklet, worksheet, quiz and mock exam for the term, as an A4 PDF. Open it on any phone or computer and print.</p>
-      <div class="tip"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7" rx="1"/></svg><span>On a phone: tap <b>Open</b>, then Share → Print. Quizzes and mock exams print without answers; answer keys are in the teacher corner below.</span></div>
+      <div class="tip"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7" rx="1"/></svg><span>On a phone: tap <b>Open</b>, then Share → Print. Quizzes, mock exams and label sheets print without answers. The answers are a separate file: tap <b>Answers</b> under each one.</span></div>
     </div>
   </div>
 </header>
 <main class="wrap">
   <div class="chips" role="group" aria-label="Course" id="chips"></div>
   <div id="lib"></div>
-  <section class="teacher" id="teacher" aria-labelledby="tH">
-    <p class="kick">Teacher corner</p>
-    <h2 id="tH">Answer keys</h2>
-    <p>The quizzes, mock exams and label-the-diagram sheets above are printed <b>without</b> their answers, so students can use them. Their answer pages are kept here, locked. Enter your teacher code once and every answer key opens on this device.</p>
-    <form class="unlock" id="uf"><input id="code" type="password" autocomplete="off" placeholder="Teacher code" aria-label="Teacher code"><button class="btn solid" type="submit" style="flex:none;padding-inline:22px">Unlock</button></form>
-    <div class="msg" id="msg" aria-live="polite"></div>
-    <div class="keys" id="keys" hidden></div>
-  </section>
 </main>
 <footer><div class="wrap"><span class="ftag">Less effort. <i>Full marks.</i></span><span><a href="/">Home</a> · <a href="/#courses">Courses</a> · <a href="/print/">Print library</a></span><small>© 2026 Catalyst. by Mrs. Rana</small></div></footer>
 <script>/* Catalyst. by Mrs. Rana — course registry. Add a course here once: the home page, the planner and the course template all read it. */
@@ -134,7 +126,7 @@ const DATA={
    "bytes": 989839,
    "cover": "covers/g10-science-label-the-diagram.jpg",
    "key": {
-    "id": "df8a07706b7c",
+    "file": "files/g10-science/Catalyst G10 Science T1 - Label the Diagram - Answers.pdf",
     "pages": 2
    }
   },
@@ -167,7 +159,7 @@ const DATA={
    "bytes": 686630,
    "cover": "covers/g10-math-lesson-quizzes.jpg",
    "key": {
-    "id": "a53d657222bb",
+    "file": "files/g10-math/Catalyst G10 Math T1 - Lesson Quizzes - Answers.pdf",
     "pages": 2
    }
   },
@@ -180,7 +172,7 @@ const DATA={
    "bytes": 251306,
    "cover": "covers/g10-math-mock-exam.jpg",
    "key": {
-    "id": "ef3754e067a7",
+    "file": "files/g10-math/Catalyst G10 Math T1 - Mock Exam - Answers.pdf",
     "pages": 1
    }
   },
@@ -203,7 +195,7 @@ const DATA={
    "bytes": 666909,
    "cover": "covers/g9-science-label-the-diagram.jpg",
    "key": {
-    "id": "37c9e1042294",
+    "file": "files/g9-science/Catalyst G9 Science T1 - Label the Diagram - Answers.pdf",
     "pages": 1
    }
   },
@@ -226,7 +218,7 @@ const DATA={
    "bytes": 389377,
    "cover": "covers/g9-science-lesson-quizzes.jpg",
    "key": {
-    "id": "2c7246faf25a",
+    "file": "files/g9-science/Catalyst G9 Science T1 - Lesson Quizzes - Answers.pdf",
     "pages": 1
    }
   },
@@ -239,7 +231,7 @@ const DATA={
    "bytes": 284990,
    "cover": "covers/g9-science-mock-exam.jpg",
    "key": {
-    "id": "2d86a8c56a15",
+    "file": "files/g9-science/Catalyst G9 Science T1 - Mock Exam - Answers.pdf",
     "pages": 1
    }
   },
@@ -262,7 +254,7 @@ const DATA={
    "bytes": 661914,
    "cover": "covers/g9-math-lesson-quizzes.jpg",
    "key": {
-    "id": "9591eb5dfe13",
+    "file": "files/g9-math/Catalyst G9 Math T1 - Lesson Quizzes - Answers.pdf",
     "pages": 2
    }
   },
@@ -275,7 +267,7 @@ const DATA={
    "bytes": 306734,
    "cover": "covers/g9-math-mock-exam.jpg",
    "key": {
-    "id": "cc81b39f0377",
+    "file": "files/g9-math/Catalyst G9 Math T1 - Mock Exam - Answers.pdf",
     "pages": 1
    }
   }
@@ -291,43 +283,11 @@ const courses=CS.filter(c=>DATA.items.some(i=>i.course===c.id));
 $("#chips").innerHTML='<button type="button" data-c="all" aria-pressed="true">All</button>'+courses.map(c=>`<button type="button" data-c="${c.id}" aria-pressed="false">Grade ${c.grade} ${c.subject}</button>`).join("");
 $("#lib").innerHTML=courses.map(c=>{const its=DATA.items.filter(i=>i.course===c.id).sort((a,b)=>ORDER.indexOf(a.kind)-ORDER.indexOf(b.kind));
   return `<section class="course" id="${c.id}" data-c="${c.id}"><div class="ch"><h2>Grade ${c.grade} ${c.subject}<i>.</i></h2><span>Term ${c.term} · ${esc(c.book)}</span><a href="${c.path}">Open the course →</a></div><div class="grid">`+
-  its.map(i=>{const k=KIND[i.kind]||["",""];return `<article class="doc"><a class="cov" href="${encodeURI(i.file)}" target="_blank" rel="noopener" aria-label="Open ${esc(i.title)}"><img src="${i.cover}" alt="" loading="lazy" width="520" height="735"><span class="pg">${i.pages} pages</span></a><div class="di"><span class="k ${k[0]}">${esc(i.kind)}</span><b>${esc(i.kind)}</b><small>${k[1]} · ${mb(i.bytes)}</small><div class="acts"><a class="btn solid" href="${encodeURI(i.file)}" target="_blank" rel="noopener">Open</a><a class="btn line" href="${encodeURI(i.file)}" download="${esc(i.title)}.pdf">Download</a></div>${i.key?`<button class="ans" type="button" data-id="${i.key.id}" data-t="${esc(i.title)} - Answers"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Answers (teacher)</button>`:""}</div></article>`;}).join("")+`</div></section>`;}).join("");
+  its.map(i=>{const k=KIND[i.kind]||["",""];return `<article class="doc"><a class="cov" href="${encodeURI(i.file)}" target="_blank" rel="noopener" aria-label="Open ${esc(i.title)}"><img src="${i.cover}" alt="" loading="lazy" width="520" height="735"><span class="pg">${i.pages} pages</span></a><div class="di"><span class="k ${k[0]}">${esc(i.kind)}</span><b>${esc(i.kind)}</b><small>${k[1]} · ${mb(i.bytes)}</small><div class="acts"><a class="btn solid" href="${encodeURI(i.file)}" target="_blank" rel="noopener">Open</a><a class="btn line" href="${encodeURI(i.file)}" download="${esc(i.title)}.pdf">Download</a></div>${i.key?`<a class="ans" href="${encodeURI(i.key.file)}" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Answers · ${i.key.pages} ${i.key.pages>1?"pages":"page"}</a>`:""}</div></article>`;}).join("")+`</div></section>`;}).join("");
 function pick(c){document.querySelectorAll("#chips button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.c===c));document.querySelectorAll(".course").forEach(s=>s.hidden=!(c==="all"||s.dataset.c===c));}
 $("#chips").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;pick(b.dataset.c);history.replaceState(null,"",b.dataset.c==="all"?"#":"#"+b.dataset.c);});
 const h=location.hash.slice(1);if(courses.some(c=>c.id===h))pick(h);
 
-/* teacher corner: answer keys are AES-GCM encrypted; the code never leaves this device */
-let KEYCACHE={};
-async function derive(code,salt){const base=await crypto.subtle.importKey("raw",new TextEncoder().encode(code),"PBKDF2",false,["deriveKey"]);return crypto.subtle.deriveKey({name:"PBKDF2",salt,iterations:DATA.iter,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["decrypt"]);}
-async function decrypt(id,code){const buf=new Uint8Array(await (await fetch("keys/"+id+".bin",{cache:"no-store"})).arrayBuffer());
-  if(String.fromCharCode(...buf.slice(0,4))!=="CXK1")throw new Error("bad file");const salt=buf.slice(4,20),iv=buf.slice(20,32);
-  const key=await derive(code,salt);return new Blob([await crypto.subtle.decrypt({name:"AES-GCM",iv},key,buf.slice(32))],{type:"application/pdf"});}
-const keyed=DATA.items.filter(i=>i.key);
-async function unlock(code){const msg=$("#msg");msg.textContent="Checking…";
-  try{const b=await decrypt(keyed[0].key.id,code);KEYCACHE[keyed[0].key.id]=b;}catch(e){msg.textContent=e&&e.name==="OperationError"?"That code is not right. Try again.":"Could not load the answer keys. Check your connection and try again.";return false;}
-  msg.textContent="";try{sessionStorage.setItem("cx-tc",code);}catch(e){}
-  const k=$("#keys");k.hidden=false;
-  const WHAT={"Lesson Quizzes":"Answers to every quiz in the Lesson Quizzes file","Mock Exam":"MCQ answers and model answers for the Mock Exam","Label the Diagram":"The correct label for every number on each sheet"};
-  k.innerHTML=keyed.map(i=>{const c=CS.find(x=>x.id===i.course)||{};return `<div class="key"><div style="flex:1;min-width:0"><b>Grade ${c.grade} ${c.subject} · ${esc(i.kind)} answers</b><small>${WHAT[i.kind]||"Answer key"} · ${i.key.pages} ${i.key.pages>1?"pages":"page"}</small></div><button class="btn solid" type="button" data-id="${i.key.id}" data-t="${esc(i.title)} - Answers">Open</button></div>`;}).join("");
-  $("#uf").hidden=true;return true;}
-$("#uf").addEventListener("submit",e=>{e.preventDefault();const v=$("#code").value.trim();if(!v){$("#msg").textContent="Type the teacher code first.";return;}unlock(v);});
-document.getElementById("lib").addEventListener("click",e=>{const b=e.target.closest(".ans");if(!b)return;
-  let c=null;try{c=sessionStorage.getItem("cx-tc")}catch(_){}
-  if(!c){const t=document.getElementById("teacher");t.scrollIntoView({behavior:"smooth",block:"start"});setTimeout(()=>document.getElementById("code").focus(),400);document.getElementById("msg").textContent="Enter the teacher code to open the answers.";return;}
-  openKey(b);});
-async function openKey(b){const code=(()=>{try{return sessionStorage.getItem("cx-tc")}catch(e){return null}})()||$("#code").value.trim();
-  const w=window.open("","_blank");const old=b.innerHTML;b.textContent="Opening…";
-  try{const blob=KEYCACHE[b.dataset.id]||await decrypt(b.dataset.id,code);KEYCACHE[b.dataset.id]=blob;const url=URL.createObjectURL(blob);
-    if(w)w.location=url;else{const a=document.createElement("a");a.href=url;a.download=b.dataset.t+".pdf";document.body.appendChild(a);a.click();a.remove();}
-  }catch(err){if(w)w.close();$("#msg").textContent="Could not open that key. Unlock again.";}
-  b.innerHTML=old;}
-$("#keys").addEventListener("click",async e=>{const b=e.target.closest("button[data-id]");if(!b)return;const code=(()=>{try{return sessionStorage.getItem("cx-tc")}catch(e){return null}})()||$("#code").value.trim();
-  const w=window.open("","_blank");b.textContent="Opening…";
-  try{const blob=KEYCACHE[b.dataset.id]||await decrypt(b.dataset.id,code);KEYCACHE[b.dataset.id]=blob;const url=URL.createObjectURL(blob);
-    if(w)w.location=url;else{const a=document.createElement("a");a.href=url;a.download=b.dataset.t+".pdf";document.body.appendChild(a);a.click();a.remove();}
-  }catch(err){if(w)w.close();$("#msg").textContent="Could not open that key. Unlock again.";}
-  b.textContent="Open";});
-try{const c=sessionStorage.getItem("cx-tc");if(c)unlock(c);}catch(e){}
 if("serviceWorker"in navigator&&location.protocol==="https:")addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));
 })();
 </script>
