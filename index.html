@@ -67,9 +67,9 @@ img{max-width:100%}
 @media (prefers-reduced-motion:no-preference){
   .aura .a1{animation:dr1 18s ease-in-out infinite alternate}.aura .a2{animation:dr2 22s ease-in-out infinite alternate}.aura .a3{animation:dr3 26s ease-in-out infinite alternate}
   @keyframes dr1{to{transform:translate(-120px,80px) scale(1.1)}}@keyframes dr2{to{transform:translate(140px,-60px) scale(1.15)}}@keyframes dr3{to{transform:translate(-160px,60px) scale(.9)}}
-  .hl .ch{opacity:0;transform:translateY(.35em) rotate(4deg);animation:chin .8s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(var(--d)*38ms + 80ms)}
-  @keyframes chin{to{opacity:1;transform:none}}
-  .under,.counts{opacity:0;animation:fin 1s .9s forwards}@keyframes fin{to{opacity:1}}
+  .hl .ch{animation:chin .8s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:calc(var(--d)*38ms + 80ms)}
+  @keyframes chin{from{opacity:0;transform:translateY(.35em) rotate(4deg)}}
+  .under,.counts{animation:fin 1s .9s backwards}@keyframes fin{from{opacity:0}}
 }
 
 /* ---------- courses ---------- */
@@ -139,6 +139,9 @@ img{max-width:100%}
 .kit div+div{padding-left:20px}.kit div:last-child{border-right:0}
 .kit h3{font:400 22px/1.15 Gloock,Georgia,serif;margin:0 0 8px}
 .kit p{margin:0;color:var(--soft);font-size:15px;line-height:1.5}.kit em{font-style:normal;color:var(--coral);font-weight:700}
+.printcta{margin-top:34px;display:flex;flex-wrap:wrap;gap:16px 28px;align-items:center;justify-content:space-between;background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:20px 22px}
+.printcta b{display:block;font:400 26px/1.1 Gloock,Georgia,serif}.printcta span{color:var(--soft);font-size:15.5px}
+.printcta>div{min-width:0;flex:1 1 300px}
 
 /* ---------- plan ---------- */
 .plan{background:var(--navy);color:var(--on);position:relative;overflow:hidden}
@@ -213,7 +216,7 @@ footer small{font-size:13.5px}
   <div class="aura" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
   <div class="wrap nav">
     <a class="brand" href="#top" aria-label="Catalyst. by Mrs. Rana, home"><b>Catalyst<i>.</i></b><span>by Mrs. Rana</span></a>
-    <nav aria-label="Sections"><a href="#courses">Courses</a><a href="#inside">Inside a lesson</a><a href="#plan">Exam plan</a><a href="#about">About</a></nav>
+    <nav aria-label="Sections"><a href="#courses">Courses</a><a href="#inside">Inside a lesson</a><a href="#plan">Exam plan</a><a href="/print/">Print library</a><a href="#about">About</a></nav>
     <a class="examchip" id="examchip" href="#plan"><b id="exd">0</b><span id="exl">days to your exam</span></a>
   </div>
   <div class="wrap stage">
@@ -293,6 +296,7 @@ footer small{font-size:13.5px}
       <div><h3>Mock Exam</h3><p>Built on the ministry exam structure: same sections, marks and time.</p></div>
       <div><h3>Label the Diagram</h3><p>Science figures with numbered blanks and a word bank.</p></div>
     </div>
+    <div class="printcta"><div><b>The print library</b><span>Every booklet, worksheet, quiz and mock exam as an A4 PDF. Open it on any phone and print.</span></div><a class="btn solid" href="/print/">Open the print library</a></div>
   </div>
 </section>
 
@@ -337,7 +341,7 @@ footer small{font-size:13.5px}
 
 <footer><div class="wrap">
   <span class="ftag">Less effort. <i>Full marks.</i></span>
-  <div class="flinks"><a href="/g10-science/">Grade 10 Science</a><a href="/g10-math/">Grade 10 Math</a><a href="/g9-science/">Grade 9 Science</a><a href="/g9-math/">Grade 9 Math</a></div>
+  <div class="flinks"><a href="/g10-science/">Grade 10 Science</a><a href="/g10-math/">Grade 10 Math</a><a href="/g9-science/">Grade 9 Science</a><a href="/g9-math/">Grade 9 Math</a><a href="/print/">Print library</a></div>
   <button class="btn install" id="inst" type="button">Add Catalyst to your phone</button>
   <p class="insthelp" id="insthelp" hidden>iPhone: tap Share, then <b>Add to Home Screen</b>. Android: open the browser menu, then <b>Install app</b>.</p>
   <small>catalystbyrana · © 2026 Catalyst. by Mrs. Rana</small>

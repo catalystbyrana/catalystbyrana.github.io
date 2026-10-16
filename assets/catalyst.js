@@ -701,6 +701,17 @@ body.cx-home .lrow .ar,body.cx-home .mod h4 .ar,body.cx-home .unit h4 span,body.
 .cx-card.navy small{color:#aeb8d0}.cx-card.navy .ic{background:rgba(251,246,238,.12);color:#f27c5f}
 .cx-card .dd{font:400 30px/1 Gloock,Georgia,serif;color:#f27c5f;margin-right:2px}
 .cx-figbox{margin-top:10px}
+.cx-printcard{grid-column:1/-1;margin-top:12px}
+.top .cx-all{display:none;margin-left:auto;text-decoration:none;border:1px solid var(--line,#e7dfd1);background:var(--paper,#fffdf9);border-radius:999px;padding:7px 14px;font:600 13.5px Outfit,sans-serif;color:var(--ink,#1b2a4e)}
+.top .cx-all:hover{border-color:#e0573a}
+@media (min-width:1080px){
+  .top .cx-all{display:inline-flex}
+  body.cx-home main.wrap,body.cx-home .top .in{max-width:1180px!important}
+  .cx-wide{display:grid;grid-template-columns:400px minmax(0,1fr);gap:20px 32px;align-items:start}
+  .cx-side{position:sticky;top:84px}
+  .cx-main>:first-child{margin-top:16px!important}
+  .cx-main .unit:first-child,.cx-main .mod:first-child{margin-top:16px}
+}
 .cx-fig,.cx-plancard{grid-column:1/-1;min-width:0}
 .chero .cart{width:120px!important;right:8px!important;bottom:-14px!important}
 .chero:has(.cart) .sub,.chero:has(.cart) .cstats{max-width:calc(100% - 120px)!important}
@@ -718,6 +729,7 @@ const st=document.createElement("style");st.id="cx-shell";st.textContent=css;doc
 
 /* logo → the Catalyst home */
 const logo=document.querySelector(".top .logo");
+if(logo&&!document.querySelector(".top .cx-all")){const a=document.createElement("a");a.className="cx-all";a.href="/#courses";a.textContent="All courses";const sp=document.querySelector(".top .sp");(sp||logo).after(a);}
 if(logo){if(logo.tagName==="A")logo.href="/";else{const a=document.createElement("a");a.className=logo.className;a.innerHTML=logo.innerHTML;a.href="/";a.title="All courses";logo.replaceWith(a);}}
 const tg=s=>s.replace(/Full mark\./g,"Full marks.").replace(/FULL MARK\./g,"FULL MARKS.");
 
@@ -761,6 +773,18 @@ function where(){
   const h=location.hash.slice(1);const v=document.querySelector("#app .view")||document.querySelector("#app");
   return{home:!h||h==="home"||h==="top",lesson:/^l\d+$/.test(h),lid:h,view:v};
 }
+function wide(v){
+  if(v.querySelector(".cx-wide"))return;
+  const hero=v.querySelector(":scope > .chero");if(!hero)return;
+  const side=document.createElement("aside");side.className="cx-side";
+  const main=document.createElement("div");main.className="cx-main";
+  const box=document.createElement("div");box.className="cx-wide";
+  hero.before(box);box.append(side,main);
+  [...v.children].filter(e=>e!==box).forEach(e=>{
+    if(e.classList.contains("foot"))return;
+    if(e.matches(".chero,.homebtns,.cx-plancard,.cx-printcard"))side.appendChild(e);else main.appendChild(e);});
+  const f=v.querySelector(":scope > .foot");if(f)v.appendChild(f);
+}
 let busy=false;
 function decorate(force){
   if(busy)return;busy=true;
@@ -770,8 +794,9 @@ function decorate(force){
     document.querySelectorAll(".chero .tag,.chero .ctag").forEach(t=>{if(/full mark\./i.test(t.textContent))t.textContent=tg(t.textContent);});
     if(w.home&&w.view&&course){
       let pc=w.view.querySelector(".cx-plancard");
-      if(force&&pc){pc.remove();pc=null;}
-      if(!pc){const anchor=w.view.querySelector(".homebtns")||w.view.querySelector(".chero");if(anchor)anchor.after(planCard());}
+      if(force&&pc){const p=pc.parentElement;pc.remove();pc=null;}
+      if(!pc){const anchor=w.view.querySelector(".homebtns")||w.view.querySelector(".chero");if(anchor){const pcd=planCard();anchor.after(pcd);const old=w.view.querySelector(".cx-printcard");if(old)old.remove();const a=document.createElement("a");a.className="cx-card cx-printcard";a.href="/print/#"+cid;a.innerHTML='<span class="ic" style="background:#f1ecf8;color:#7a4fa8"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9V3h12v6"/><rect x="2" y="9" width="20" height="9" rx="2"/><rect x="6" y="14" width="12" height="7" rx="1"/></svg></span><span><b>Print this term</b><small>Booklet, worksheets, quizzes and mock exam as PDFs</small></span><span class="gt">›</span>';pcd.after(a);}}
+      wide(w.view);
     }
     if(w.lesson&&w.view&&w.lid&&FIG[w.lid]){
       const ex=w.view.querySelector(".cx-fig");
