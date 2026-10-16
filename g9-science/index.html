@@ -366,18 +366,19 @@ textarea{min-height:120px;resize:vertical;line-height:1.5}
 <!-- HOME -->
 <section class="view on" id="v-course">
   <div class="chero">
-    <div class="code">Grade 9 · Science · Term 1</div>
+    <div class="code">Grade 9 · General · Term 1 · Inspire</div>
     <div class="cart"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><defs><radialGradient id="hg9" cx=".35" cy=".35" r=".75"><stop offset="0" stop-color="#6fc0ee"/><stop offset="1" stop-color="#1a5f96"/></radialGradient></defs>
 <circle cx="100" cy="100" r="78" fill="url(#hg9)"/><path d="M52 70 q30 -22 54 -4 q-8 24 16 34 q-18 30 -46 12 q-30 -10 -24 -42z M120 132 q24 -10 36 8 q-10 26 -32 20z" fill="#86c36a"/>
 <circle cx="100" cy="100" r="88" fill="none" stroke="#7ad3b5" stroke-width="5" opacity=".9"/>
 <g transform="translate(150 40) rotate(30)"><path d="M0 0 q26 -26 52 0 q-26 26 -52 0z" fill="#4caf50"/><path d="M0 0 H52" stroke="#2f7a37" stroke-width="2"/></g>
 <g fill="#f6c445"><circle cx="40" cy="168" r="6"/><circle cx="170" cy="150" r="4"/></g></svg></div>
-    <h1>Life on <em>Earth</em><i>.</i></h1>
-    <p class="sub">Inspire Science · Ecology, Biodiversity &amp; the Nature of Science</p>
+    <h1>Science<i>.</i></h1>
+    <div class="ctag">Less effort. Full marks.</div>
+    <p class="sub">Ecology, biodiversity and the nature of science, lesson by lesson: the textbook figure, a mind map, flashcards, traps and an exam center.</p>
     <div class="cstats" id="cstats"></div>
   </div>
   <div id="modlist"></div>
-  <div class="foot">Less effort. Full mark.<br><b>Catalyst. by Mrs. Rana</b></div>
+  <div class="foot">Less effort. Full marks.<br><b>Catalyst. by Mrs. Rana</b></div>
 </section>
 
 <section class="view" id="v-home">
@@ -392,7 +393,7 @@ textarea{min-height:120px;resize:vertical;line-height:1.5}
     </div>
   </div>
   <div class="tiles" id="tiles"></div>
-  <div class="foot">Less effort. Full mark.<br><b>Catalyst. by Mrs. Rana</b></div>
+  <div class="foot">Less effort. Full marks.<br><b>Catalyst. by Mrs. Rana</b></div>
 </section>
 
 <!-- LEARN -->
@@ -519,7 +520,7 @@ document.addEventListener("click", e => { const r = e.target.closest("[data-less
 function renderCourse() {
   const ready = COURSE.lessons.filter(l => l.ready);
   const qn = ready.filter(l => !l.exit).reduce((a, l) => a + l.bank.length, 0);
-  $("#cstats").innerHTML = `<span class="chip">${COURSE.book.length} textbook lessons</span><span class="chip">${ready.filter(l => !l.exit).length} parts</span><span class="chip">${qn} questions</span>`;
+  $("#cstats").innerHTML = `<div><b>${COURSE.book.length}</b>lessons</div><div><b>${ready.filter(l => !l.exit).length}</b>parts</div><div><b>${qn.toLocaleString("en")}</b>questions</div>`;
   $("#modlist").innerHTML = COURSE.book.map(B => `<section class="mod"><h3>${esc(B.module)} · ${esc(B.lesson)}</h3><h4>${esc(B.title)} <span class="ar" style="display:inline;font-size:16px">${esc(B.ar)}</span></h4>${B.secs.map(h => COURSE.lessons.find(l => l.hid === h)).filter(Boolean).map(l => {
     const st = l.ready ? stateOf(l.id) : null, pct = l.ready ? Math.round(Object.keys(st.mastered).length / l.bank.length * 100) : 0;
     return `<button class="lrow${l.ready ? " ready" : ""}${l.exit ? " ex" : ""}" ${l.ready ? `data-lesson="${l.hid}"` : 'disabled aria-disabled="true"'}><span class="num">${l.exit ? "✓" : esc(l.sec)}</span><span class="tx"><b>${esc(l.secTitle)}</b><small>${esc(l.booklet || "")} · ${esc(l.pp)}</small><span class="ar">${esc(l.ar)}</span></span><span class="st">${l.ready ? (pct ? pct + "%" : "Start") : "Soon"}</span></button>`;
@@ -799,7 +800,7 @@ function check(q) {
   let extra = "";
   if (q.t === "written") extra = `<div class="keys">${q.keys.map((k, i) => `<span class="key ${g.hits[i] ? "hit" : "miss"}">${esc(k[0])}</span>`).join("")}</div><div style="font-size:14px">Key words found: <b>${g.n} / ${q.keys.length}</b></div><div class="model"><b>Model answer:</b> ${esc(q.model)}</div>`;
   const showAns = !g.ok && q.t !== "written" && !["mcq", "label", "multi", "tf"].includes(q.t) || (!g.ok && q.t === "fill");
-  $("#fbx").innerHTML = `<div class="fb ${g.ok ? "ok" : "no"}"><span class="v">${g.ok ? pickOne(["Correct.", "Exactly right.", "Full mark.", "That's it."]) : "Not quite."}</span>
+  $("#fbx").innerHTML = `<div class="fb ${g.ok ? "ok" : "no"}"><span class="v">${g.ok ? pickOne(["Correct.", "Exactly right.", "Full marks.", "That's it."]) : "Not quite."}</span>
     ${showAns ? `<div><b>Answer:</b> ${esc(answerText(q))}</div>` : ""}${extra}${q.x ? `<div style="margin-top:4px">${esc(q.x)}</div>` : ""}${q.xa ? `<span class="ar">${esc(q.xa)}</span>` : ""}</div>`;
   $(".ractions").innerHTML = `<button class="cta ${last ? "coral" : ""}" id="nxt">${last ? "See my result" : "Next question"}</button>`;
   $("#nxt").onclick = () => { RUN.i++; last ? finish() : showQ(); };
@@ -854,4 +855,4 @@ setAr(G.ar !== false);
 window.matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", () => { if (current === "map") renderMap(); });
 </script>
 
-</body></html></html>
+<!--cx-shell--><script>window.CATALYST_COURSE="g9-science"</script><script src="weekly.js"></script><script src="/assets/catalyst.js"></script></body></html></html>

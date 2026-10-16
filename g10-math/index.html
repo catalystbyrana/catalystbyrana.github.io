@@ -2350,7 +2350,7 @@ function home(){
   chrome(false,false);
   const total=C.units.reduce((a,u)=>a+u.lessons.length,0);
   let h='<section class="view">'+
-  '<div class="chero"><div class="code">Grade 10 · General · Term 1 · Reveal</div><h1>Math<i>.</i></h1><div class="tag">Less effort. Full mark.</div>'+
+  '<div class="chero"><div class="code">Grade 10 · General · Term 1 · Reveal</div><h1>Math<i>.</i></h1><div class="tag">Less effort. Full marks.</div>'+
   '<p>Every lesson: one map, every question type with its method and solved examples, traps, flashcards and an exam center that never runs out.</p>'+
   '<div class="cstats"><div><b>'+total+'</b>lessons</div><div><b>3</b>units</div><div><b>∞</b>questions</div></div>'+
   '<div class="art" aria-hidden="true">'+C.art+'</div></div>'+
@@ -2406,7 +2406,7 @@ function lessonHome(id){
     ['c-teal','mist','My mistakes',nm+' to fix','#'+id+'-mist']
   ];
   h+='<div class="tiles">'+tiles.map(t=>'<a class="tile '+t[0]+'" href="'+t[4]+'"><span class="ic">'+ICON[t[1]]+'</span><span><b>'+t[2]+'</b><small>'+t[3]+'</small></span>'+(t[0].includes('wide')?'<span class="gox">›</span>':'')+'</a>').join('')+'</div>';
-  h+='<div class="foot"><b>Catalyst.</b><br>Less effort. Full mark.</div></section>';
+  h+='<div class="foot"><b>Catalyst.</b><br>Less effort. Full marks.</div></section>';
   app.innerHTML=h;
 }
 
@@ -2624,7 +2624,7 @@ function run(cfg){
     const p=total?Math.round(100*right/total):0;
     const verdict=(timeUp?'Time is up. ':'')+(p>=90?'Full-mark level. Keep it up.':p>=70?'Good. Fix your mistakes and try again.':'Go back to the lesson and the solved examples, then try again.');
     app.innerHTML='<section class="view"><div class="score"><div class="big">'+right+'<small>/'+total+'</small></div><div class="verdict">'+verdict+'</div></div>'+
-    '<div class="rcard"><div class="lg">Catalyst<i>.</i><small>by Mrs. Rana</small></div><div class="who">'+esc(DB.name||'Student')+'</div><div class="what">'+esc(cfg.title)+' · Grade 10 Math</div><div class="num"><b>'+p+'%</b><span>'+right+' of '+total+' correct</span></div><div class="meta2"><span>'+new Date().toLocaleDateString('en-GB')+'</span><span>Less effort. Full mark.</span></div></div>'+
+    '<div class="rcard"><div class="lg">Catalyst<i>.</i><small>by Mrs. Rana</small></div><div class="who">'+esc(DB.name||'Student')+'</div><div class="what">'+esc(cfg.title)+' · Grade 10 Math</div><div class="num"><b>'+p+'%</b><span>'+right+' of '+total+' correct</span></div><div class="meta2"><span>'+new Date().toLocaleDateString('en-GB')+'</span><span>Less effort. Full marks.</span></div></div>'+
     '<div class="ractions"><button class="btn" id="again">Try again</button>'+(wrong.length?'<a class="btn ghost" href="#'+(cfg.lid?cfg.lid+'-mist':'mistakes')+'">Fix my mistakes</a>':'')+'<a class="btn ghost" href="#'+(cfg.lid||'')+'">Back</a></div></section>';
     $('#again').addEventListener('click',()=>{ if(cfg.lid&&!cfg.fromMist)examView(cfg.lid); else route(); });
     window.scrollTo(0,0);
@@ -2655,3 +2655,4 @@ window.addEventListener('hashchange',route);
 route();
 })();
 </script>
+<!--cx-shell--><script>window.CATALYST_COURSE="g10-math"</script><script src="/assets/catalyst.js"></script>
