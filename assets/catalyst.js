@@ -818,3 +818,72 @@ addEventListener("hashchange",()=>{
 });
 decorate();
 })();
+
+/* ===== Spark: the Catalyst guide (the coral dot from the logo and the energy curve) ===== */
+(function(){
+"use strict";
+const SCI=typeof window.setLesson==="function"&&typeof window.go==="function";
+const css=`
+.cx-spark{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:900;font-family:Outfit,system-ui,sans-serif}
+.cx-spark[hidden]{display:none}
+.cx-sbtn{width:58px;height:58px;border-radius:50%;border:0;cursor:pointer;background:radial-gradient(circle at 38% 34%,#fff 0 9%,#ffd3c4 18%,#f27c5f 46%,#e0573a 70%);box-shadow:0 10px 28px -8px rgba(224,87,58,.75),0 0 0 6px rgba(224,87,58,.14);position:relative}
+.cx-sbtn:after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(224,87,58,.45);animation:cxpulse 2.4s ease-out infinite}
+@keyframes cxpulse{from{transform:scale(.85);opacity:1}to{transform:scale(1.45);opacity:0}}
+@media (prefers-reduced-motion:reduce){.cx-sbtn:after{animation:none}}
+.cx-sbub{position:absolute;right:0;bottom:72px;width:min(340px,calc(100vw - 32px));background:#1b2a4e;color:#fbf6ee;border-radius:22px;padding:16px 16px 14px;box-shadow:0 30px 60px -24px rgba(17,27,52,.7);transform-origin:bottom right;animation:cxpop .28s cubic-bezier(.2,.9,.3,1.3) backwards}
+.cx-sbub[hidden]{display:none}
+@keyframes cxpop{from{transform:scale(.6);opacity:0}}
+.cx-sbub:after{content:"";position:absolute;right:22px;bottom:-7px;width:14px;height:14px;background:#1b2a4e;transform:rotate(45deg);border-radius:3px}
+.cx-sh{display:flex;align-items:center;gap:8px;font:700 12px Outfit,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#f27c5f}
+.cx-sh i{width:10px;height:10px;border-radius:50%;background:#e0573a;box-shadow:0 0 0 4px rgba(224,87,58,.25)}
+.cx-sh button{margin-left:auto;background:none;border:0;color:#aeb8d0;font:600 20px Outfit;cursor:pointer;line-height:1;padding:2px 4px}
+.cx-st{font:400 21px/1.2 Gloock,Georgia,serif;margin:10px 0 6px}
+.cx-sp{font-size:15px;line-height:1.45;color:#d9deea;margin:0}
+.cx-sp .no{color:#ff9d86;text-decoration:line-through;text-decoration-thickness:1.5px}
+.cx-sp .ok{color:#7fe0c3;font-weight:600}
+.cx-sa{display:block;direction:rtl;text-align:right;font:600 14px/1.6 Cairo,sans-serif;color:#aeb8d0;margin-top:6px}
+.cx-sf{display:flex;gap:8px;margin-top:12px}
+.cx-sf button,.cx-sf a{border:1px solid rgba(251,246,238,.2);background:rgba(251,246,238,.06);color:#fbf6ee;border-radius:999px;padding:8px 13px;font:700 13.5px Outfit,sans-serif;cursor:pointer;text-decoration:none}
+.cx-sf .p{background:#e0573a;border-color:#e0573a}
+body.noar .cx-sa{display:none}
+`;
+const st=document.createElement("style");st.textContent=css;document.head.appendChild(st);
+const root=document.createElement("div");root.className="cx-spark";root.hidden=true;
+root.innerHTML='<div class="cx-sbub" hidden role="dialog" aria-label="Spark"><div class="cx-sh"><i></i><span>Spark</span><button type="button" aria-label="Close">×</button></div><div class="cx-sc"></div><div class="cx-sf"></div></div><button class="cx-sbtn" type="button" aria-label="Spark: a tip for this lesson"></button>';
+document.body.appendChild(root);
+const bub=root.querySelector(".cx-sbub"),sc=root.querySelector(".cx-sc"),sf=root.querySelector(".cx-sf");
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fm=s=>{try{return window.CM&&CM.T?CM.T(String(s)):esc(s).replace(/\$/g,"");}catch(e){return esc(s).replace(/\$/g,"");}};
+let deck=[],k=0,ctx="";
+function lessonDeck(){
+  if(SCI){if(typeof L==="undefined"||!L)return[];const d=[];
+    (L.hooks||[]).forEach(h=>d.push({t:"Memory hook",h:h[0],p:esc(h[1]),a:h[2]}));
+    (L.facts||[]).forEach(f=>d.push({t:"Did you know?",h:f[0],p:esc(f[1]),a:f[2]}));
+    return d;}
+  const id=location.hash.slice(1),l=window.LESSONS&&LESSONS[id];if(!l)return[];
+  return (l.traps||[]).map(t=>({t:"Don't fall for it",h:"",p:'<span class="no">'+fm(t.x)+'</span><br><span class="ok">✓ '+fm(t.v)+'</span><br>'+fm(t.why),a:t.ar}));
+}
+function homeDeck(){
+  const s=window.CatalystPlan&&CatalystPlan.status();const d=[];
+  if(s&&s.course.id===window.CATALYST_COURSE){const t=s.today&&s.today.items[0];d.push({t:s.days+" days to go",h:t?"Today: "+t.t:"Your plan is ready",p:t?"One thing today, done well, beats five things rushed.":"Open the plan to see today's task.",a:"",link:t?t.u:null});}
+  else d.push({t:"Start here",h:"When is your exam?",p:"Tell me the date and I'll plan every day until then, one lesson at a time.",a:"",plan:true});
+  d.push({t:"How to win a lesson",h:"Read · watch · test · fix",p:"Read the lesson page, open the figure, take the quick test, then clear your mistakes. Twenty minutes, one lesson.",a:""});
+  return d;
+}
+function show(){
+  const c=deck[k%deck.length];if(!c)return;
+  sc.innerHTML='<div class="cx-st">'+esc(c.h||c.t)+'</div><p class="cx-sp">'+c.p+'</p>'+(c.a?'<span class="cx-sa">'+esc(c.a)+'</span>':"");
+  root.querySelector(".cx-sh span").textContent="Spark · "+c.t;
+  sf.innerHTML=(deck.length>1?'<button type="button" data-a="next" class="p">Another one</button>':"")+(c.link?'<a href="'+c.link+'">Open today\'s lesson</a>':"")+(c.plan?'<button type="button" data-a="plan" class="p">Plan my exam</button>':"");
+}
+root.querySelector(".cx-sbtn").addEventListener("click",()=>{if(!bub.hidden){bub.hidden=true;return;}deck=ctx==="home"?homeDeck():lessonDeck();if(!deck.length)return;k=Math.floor(Math.random()*deck.length);show();bub.hidden=false;});
+root.querySelector(".cx-sh button").addEventListener("click",()=>{bub.hidden=true;});
+sf.addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(!b)return;if(b.dataset.a==="next"){k++;show();}else if(b.dataset.a==="plan"){bub.hidden=true;const pc=document.querySelector(".cx-plancard");if(pc)pc.click();}});
+function where(){
+  if(SCI){const v=document.querySelector(".view.on");return v?(v.id==="v-course"?"home":v.id==="v-home"?"lesson":""):"";}
+  const h=location.hash.slice(1);return(!h||h==="home")?"home":/^l\d+$/.test(h)?"lesson":"";
+}
+function sync(){const w=where();if(w!==ctx){ctx=w;bub.hidden=true;}root.hidden=!ctx||(ctx==="lesson"&&!lessonDeck().length);}
+let r=0;new MutationObserver(()=>{if(!r)r=requestAnimationFrame(()=>{r=0;sync();});}).observe(document.querySelector("main")||document.body,{childList:true,subtree:true,attributes:true,attributeFilter:["class"]});
+addEventListener("hashchange",()=>setTimeout(sync,50));sync();
+})();

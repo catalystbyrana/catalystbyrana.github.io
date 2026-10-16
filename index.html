@@ -37,6 +37,10 @@ img{max-width:100%}
 .aura .a1{width:640px;height:640px;background:#523a6e;opacity:.55;right:-160px;top:-240px}
 .aura .a2{width:520px;height:520px;background:var(--coral);opacity:.2;left:-200px;bottom:0}
 .aura .a3{width:380px;height:380px;background:var(--teal);opacity:.16;left:46%;top:36%}
+.field{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+.hint{display:none;margin-top:16px;font:600 13.5px Outfit,sans-serif;color:var(--on-soft);align-items:center;gap:8px}
+.hint i{width:9px;height:9px;border-radius:50%;background:var(--coral);box-shadow:0 0 0 4px rgba(224,87,58,.25)}
+@media (hover:hover){.hint{display:flex}}
 .hero:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.06;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
 .nav{display:flex;align-items:center;gap:14px;padding-block:20px}
 .brand{display:flex;align-items:baseline;gap:9px;text-decoration:none}
@@ -212,7 +216,7 @@ footer small{font-size:13.5px}
 </head>
 <body>
 <header class="hero" id="top">
-  <div class="aura" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+  <div class="aura" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div><canvas class="field" id="field" aria-hidden="true"></canvas>
   <div class="wrap nav">
     <a class="brand" href="#top" aria-label="Catalyst. by Mrs. Rana, home"><b>Catalyst<i>.</i></b><span>by Mrs. Rana</span></a>
     <nav aria-label="Sections"><a href="#courses">Courses</a><a href="#inside">Inside a lesson</a><a href="#plan">Exam plan</a><a href="/print/">Print library</a><a href="#about">About</a></nav>
@@ -224,6 +228,7 @@ footer small{font-size:13.5px}
       <p class="by">by Mrs. Rana</p>
       <p class="lede">Revision built from the school textbook, page by page. <b>The exam's own figures, animated. Thousands of exam-style questions. A plan to your exam day.</b></p>
       <div class="acts"><a class="btn solid" href="#courses">Start studying</a><a class="btn line" href="#plan">Plan my exam</a></div>
+      <p class="hint"><i></i>Move across the page. You are the catalyst.</p>
     </div>
   </div>
   <div class="wrap">
@@ -1064,6 +1069,33 @@ let rt;addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{if(box
 $("#replay").addEventListener("click",()=>rx(false));
 (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(()=>rx(false));
 
+
+/* reaction field: particles drift along the reaction; near the catalyst (your pointer) they speed up and light up */
+(()=>{const cv=document.getElementById("field");if(!cv||!cv.getContext)return;const cx=cv.getContext("2d"),hero=cv.parentElement;
+  let W=0,H=0,dpr=1,P=[],mx=-1e4,my=-1e4,auto=true,t0=performance.now(),raf=0,vis=true;
+  const R=()=>Math.min(190,Math.max(120,W*.12));
+  function size(){dpr=Math.min(2,devicePixelRatio||1);W=hero.clientWidth;H=hero.clientHeight;cv.width=W*dpr;cv.height=H*dpr;cx.setTransform(dpr,0,0,dpr,0,0);
+    const n=Math.min(170,Math.round(W*H/8000));P=Array.from({length:n},()=>mk(Math.random()*W));}
+  function mk(x){return{x,y0:Math.random()*H,a:6+Math.random()*26,f:.002+Math.random()*.004,ph:Math.random()*6.28,v:.18+Math.random()*.35,e:0,r:.8+Math.random()*1.4};}
+  function frame(now){
+    const t=(now-t0)/1000;cx.clearRect(0,0,W,H);
+    if(auto){mx=W*(.5+.38*Math.sin(t*.23));my=H*(.42+.22*Math.sin(t*.37+1));}
+    const rr=R(),r2=rr*rr;
+    for(const p of P){
+      const y=p.y0+Math.sin(p.x*p.f+p.ph)*p.a;const dx=p.x-mx,dy=y-my,d2=dx*dx+dy*dy;
+      const near=d2<r2?1-Math.sqrt(d2)/rr:0;p.e+=(near-p.e)*.08;
+      p.x+=p.v*(1+p.e*5);if(p.x>W+10){Object.assign(p,mk(-10));}
+      if(p.e>.25){cx.strokeStyle="rgba(242,124,95,"+(p.e*.35).toFixed(3)+")";cx.lineWidth=1;cx.beginPath();cx.moveTo(p.x,y);cx.lineTo(mx,my);cx.stroke();}
+      cx.fillStyle=p.e>.05?"rgba("+Math.round(251-11*p.e)+","+Math.round(246-122*p.e)+","+Math.round(238-143*p.e)+","+(.28+.6*p.e).toFixed(3)+")":"rgba(251,246,238,.22)";
+      cx.beginPath();cx.arc(p.x,y,p.r*(1+p.e*1.6),0,6.283);cx.fill();}
+    if(!auto){const g=cx.createRadialGradient(mx,my,0,mx,my,rr*.5);g.addColorStop(0,"rgba(242,124,95,.22)");g.addColorStop(1,"rgba(242,124,95,0)");cx.fillStyle=g;cx.beginPath();cx.arc(mx,my,rr*.5,0,6.283);cx.fill();}
+    if(vis&&!reduce)raf=requestAnimationFrame(frame);else raf=0;}
+  size();addEventListener("resize",()=>{clearTimeout(size.t);size.t=setTimeout(size,200);});
+  hero.addEventListener("pointermove",e=>{if(e.pointerType==="touch")return;const b=hero.getBoundingClientRect();mx=e.clientX-b.left;my=e.clientY-b.top;auto=false;});
+  hero.addEventListener("pointerleave",()=>{auto=true;});
+  new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(vis&&!raf&&!reduce)raf=requestAnimationFrame(frame);}).observe(hero);
+  raf=requestAnimationFrame(frame);
+})();
 /* count-ups */
 function countTo(el,to,ms){if(reduce){el.textContent=to.toLocaleString("en");return;}const t0=performance.now();const s=t=>{const k=Math.min(1,(t-t0)/ms),e=1-Math.pow(1-k,3);el.textContent=Math.round(to*e).toLocaleString("en");if(k<1)requestAnimationFrame(s);};requestAnimationFrame(s);}
 const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){countTo(en.target,+en.target.dataset.to,1600);io.unobserve(en.target);}}),{threshold:.4});
